@@ -9,10 +9,21 @@ const setupSocket = require("./socketServer");
 
 const app = express();
 const server = http.createServer(app);  
-const allowedOrigins = [
-  'http://localhost:3000', 
-  'https://ai-fusion-client.vercel.app' 
-];
+
+let allowedOrigins;
+
+if (process.env.NODE_ENV === "production") {
+  allowedOrigins = ["https://ai-fusion-client.vercel.app"];
+} else {
+  allowedOrigins = ["http://localhost:5173"];
+}
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 // Middleware
 app.use(cors({
   origin: allowedOrigins,
