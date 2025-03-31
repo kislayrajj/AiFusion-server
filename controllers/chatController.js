@@ -9,14 +9,14 @@ const sendMessage = async (req, res) => {
     }
 
     try {
-        // ✅ Save User Message
+        //  Save User Message
         const userMessage = new ChatModel({ sender: "User", message, bot });
         await userMessage.save();
 
-        // ✅ Get AI response based on bot type
+        //  Get AI response based on bot type
         const botReply = await getAIResponse(bot, message);
 
-        // ✅ Save AI Response
+        //  Save AI Response
         const botMessage = new ChatModel({ sender: bot, message: botReply, bot });
         await botMessage.save();
 
@@ -25,7 +25,7 @@ const sendMessage = async (req, res) => {
         res.json({ botReply });
 
     } catch (error) {
-        console.error("❌ Error processing chat:", error.message);
+        console.error(" Error processing chat:", error.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };

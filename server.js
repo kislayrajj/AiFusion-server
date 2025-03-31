@@ -9,9 +9,15 @@ const setupSocket = require("./socketServer");
 
 const app = express();
 const server = http.createServer(app);  
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'https://ai-fusion-client.vercel.app' 
+];
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true 
+}));app.use(express.json());
 
 // Connect MongoDB
 const connectDB = async () => {
@@ -32,7 +38,7 @@ connectDB();
 app.use("/api/chat", chatRoutes);
 app.use("/api/bot", botRoutes);
 
-// ✅ Setup Socket.IO
+//  Setup Socket.IO
 const io = setupSocket(server);
 
 // Start Server

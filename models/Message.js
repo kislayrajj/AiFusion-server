@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
-    sender: String,  // "User" or bot name
+    sender: String,  
     message: String, 
-    bot: String,     // Identify which bot the message belongs to
+    bot: String,     
     timestamp: { type: Date, default: Date.now }
 });
 

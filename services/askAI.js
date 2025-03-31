@@ -4,16 +4,10 @@ const AI_MODELS = {
   "Mistral AI":
     "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
   "LLaMA 2": "https://api.together.xyz/v1/chat/completions",
-
-  // GPT4All: "http://localhost:5000/api/gpt4all",
-  // "Vicuna AI": "https://api-inference.huggingface.co/models/lmsys/vicuna-7b-v1.5",
   "Gemma AI": "https://api-inference.huggingface.co/models/google/gemma-7b",
   "GPT-2": "https://api-inference.huggingface.co/models/gpt2",
-  "GPT-Neo": "https://api-inference.huggingface.co/models/EleutherAI/gpt-neo-2.7B",
-
-
-
-
+  "GPT-Neo":
+    "https://api-inference.huggingface.co/models/EleutherAI/gpt-neo-2.7B",
 };
 
 const getAIResponse = async (bot, message) => {
@@ -22,13 +16,12 @@ const getAIResponse = async (bot, message) => {
   );
 
   if (!botKey) {
-    console.error(`❌ Error: No API URL found for bot "${bot}"`);
+    console.error(`Error: No API URL found for bot "${bot}"`);
     return "Invalid bot selection.";
   }
 
   const apiUrl = AI_MODELS[botKey];
 
-  // Use LLaMA-3-8B instead
   const LLaMA_MODEL = "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free";
 
   const requestData =
@@ -56,7 +49,7 @@ const getAIResponse = async (bot, message) => {
     });
 
     console.log(
-      `✅ Raw AI Response for ${bot}:`,
+      `Raw AI Response for ${bot}:`,
       JSON.stringify(response.data, null, 2)
     );
 
@@ -73,7 +66,7 @@ const getAIResponse = async (bot, message) => {
     return aiResponse;
   } catch (error) {
     console.error(
-      `❌ Error calling ${bot}:`,
+      `Error calling ${bot}:`,
       error.response?.data || error.message
     );
     return "Error processing request.";
