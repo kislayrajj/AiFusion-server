@@ -48,6 +48,16 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/bot", botRoutes);
 app.use("/api/experts", expertRoutes)
 
+app.get("/", (req, res) => {
+  try {
+    res.status(200).send(`Server is Running.<br/><br/> <i>Hmm.. That's what she said.<i/> <br/> <br/>^_____^`);
+  } catch (error) {
+    console.error("Error: ", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 //  Setup Socket.IO
 const io = setupSocket(server);
 
