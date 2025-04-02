@@ -6,6 +6,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const botRoutes = require("./routes/botRoutes");
 const http = require("http");  
 const setupSocket = require("./socketServer"); 
+const expertRoutes = require("./routes/expertRoutes")
 
 const app = express();
 const server = http.createServer(app);  
@@ -15,20 +16,17 @@ let allowedOrigins;
 if (process.env.NODE_ENV === "production") {
   allowedOrigins = ["https://ai-fusion-client.vercel.app"];
 } else {
-  allowedOrigins = ["http://localhost:5173"];
+  allowedOrigins =  ["http://localhost:5173", "http://localhost:5174"];
 }
+// let allowedOrigins=["http://localhost:5173"]
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+
 // Middleware
 app.use(cors({
   origin: allowedOrigins,
   credentials: true 
-}));app.use(express.json());
+}));
+app.use(express.json());
 
 // Connect MongoDB
 const connectDB = async () => {
@@ -48,6 +46,7 @@ connectDB();
 // Routes
 app.use("/api/chat", chatRoutes);
 app.use("/api/bot", botRoutes);
+app.use("/api/experts", expertRoutes)
 
 //  Setup Socket.IO
 const io = setupSocket(server);
